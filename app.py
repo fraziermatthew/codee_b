@@ -118,9 +118,9 @@ for n, msg in enumerate(st.session_state.messages):
         )
         count += 1  # Increment count for unique streamlit component keys
         
-        '''
-        Debug-mode below - Uncomment below to see the feedback sent to TRubrics
-        '''
+        
+        # Debug-mode below - Uncomment below to see the feedback sent to TRubrics
+        
         # if feedback1:
         #     with st.sidebar:
         #         st.write(":orange[Here's the raw feedback you sent to [Trubrics](https://trubrics.streamlit.app/):]")
