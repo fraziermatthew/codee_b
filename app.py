@@ -9,7 +9,7 @@ college_board_logo = "https://wthsscratchpaper.net/wp-content/uploads/2023/03/Co
 codee_avatar = 'https://miro.medium.com/v2/resize:fit:525/1*lyyXmbeoK5JiIBNCnzzjjg.png'
 
 st.set_page_config(
-    page_title="Codee-B"
+    page_title="Codee-B",
     page_icon=college_board_logo,
     layout="wide",
 )
