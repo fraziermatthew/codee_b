@@ -73,54 +73,61 @@ for n, msg in enumerate(st.session_state.messages):
         if feedback_key not in st.session_state:
             st.session_state[feedback_key] = None
 
-        st.write(f"How well do you believe that the chatbot answered your question?")
-        feedback1 = collector.st_feedback(
-            component="q1",
-            feedback_type="faces",
-            model=model,
-            # open_feedback_label="[Optional] Provide additional feedback",  # For optional open-ended feedback
-            prompt_id=st.session_state.prompt_ids[int(n / 2) - 1],
-            user_id=user_id,
-            key="q1-" + str(count),
-        )
+        # In-app feedback container
+        with st.container(border=True):
+            col1, col2 = st.columns(2)
         
-        st.write(f"How well did the agent’s response take into account your personal background and experience?")
-        feedback2 = collector.st_feedback(
-            component="q2",
-            feedback_type="faces",
-            model=model,
-            # open_feedback_label="[Optional] Provide additional feedback",  # For optional open-ended feedback            
-            prompt_id=st.session_state.prompt_ids[int(n / 2) - 1],
-            user_id=user_id,
-            key="q2-"+  str(count),
-        )
-        
-        st.write(f"How understandable do you believe the agent's response was to you?")
-        feedback3 = collector.st_feedback(
-            component="q3",
-            feedback_type="faces",
-            model=model,
-            # open_feedback_label="[Optional] Provide additional feedback",  # For optional open-ended feedback
-            prompt_id=st.session_state.prompt_ids[int(n / 2) - 1],
-            user_id=user_id,
-            key="q3-"+  str(count),
-        )
-        
-        st.write(f"If there are examples shown to you, how understandable do you believe the examples were to you?")
-        feedback4 = collector.st_feedback(
-            component="q4",
-            feedback_type="faces",
-            model=model,
-            # open_feedback_label="[Optional] Provide additional feedback",  # For optional open-ended feedback
-            prompt_id=st.session_state.prompt_ids[int(n / 2) - 1],
-            user_id=user_id,
-            key="q4-"+  str(count),
-        )
+            with col1:
+                st.markdown(f"How well do you believe that the chatbot answered your question?")
+                st.markdown(f"How well did the agent's response take into account your personal background and experience?")
+                st.markdown(f"How understandable do you believe the agent's response was to you?")
+                st.markdown(f"If there are examples shown to you, how understandable do you believe the examples were to you?")
+            
+            with col2:        
+                feedback1 = collector.st_feedback(
+                    component="q1",
+                    feedback_type="faces",
+                    model=model,
+                    # open_feedback_label="[Optional] Provide additional feedback",  # For optional open-ended feedback
+                    prompt_id=st.session_state.prompt_ids[int(n / 2) - 1],
+                    user_id=user_id,
+                    key="q1-" + str(count),
+                )
+                
+                feedback2 = collector.st_feedback(
+                    component="q2",
+                    feedback_type="faces",
+                    model=model,
+                    # open_feedback_label="[Optional] Provide additional feedback",  # For optional open-ended feedback            
+                    prompt_id=st.session_state.prompt_ids[int(n / 2) - 1],
+                    user_id=user_id,
+                    key="q2-"+  str(count),
+                )
+                
+                feedback3 = collector.st_feedback(
+                    component="q3",
+                    feedback_type="faces",
+                    model=model,
+                    # open_feedback_label="[Optional] Provide additional feedback",  # For optional open-ended feedback
+                    prompt_id=st.session_state.prompt_ids[int(n / 2) - 1],
+                    user_id=user_id,
+                    key="q3-"+  str(count),
+                )
+                
+                feedback4 = collector.st_feedback(
+                    component="q4",
+                    feedback_type="faces",
+                    model=model,
+                    # open_feedback_label="[Optional] Provide additional feedback",  # For optional open-ended feedback
+                    prompt_id=st.session_state.prompt_ids[int(n / 2) - 1],
+                    user_id=user_id,
+                    key="q4-"+  str(count),
+                )
+
         count += 1  # Increment count for unique streamlit component keys
         
-        
         # Debug-mode below - Uncomment below to see the feedback sent to TRubrics
-        
+
         # if feedback1:
         #     with st.sidebar:
         #         st.write(":orange[Here's the raw feedback you sent to [Trubrics](https://trubrics.streamlit.app/):]")
