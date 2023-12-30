@@ -27,7 +27,7 @@ with st.sidebar:
     user_id = st.text_input("Participant #", key="user_id", type="password")
 
 collector = FeedbackCollector(
-    project="codee-b",
+    project="codee_b",
     email=st.secrets["TRUBRICS_EMAIL"], 
     password=st.secrets["TRUBRICS_PW"]
 )
