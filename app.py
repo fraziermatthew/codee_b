@@ -1,7 +1,7 @@
 import uuid
 
 import streamlit as st
-import openai
+from openai import OpenAI
 
 from trubrics.integrations.streamlit import FeedbackCollector
 
@@ -54,11 +54,16 @@ model = "gpt-4"
 
 temperature = 0.3
 
-openai.api_key = st.secrets["OPENAI_API_KEY_B"]
+openai_api_key_b = st.secrets["OPENAI_API_KEY_B"]
+
+messages = st.session_state.messages
 
 # Feedback mechanism
 for n, msg in enumerate(st.session_state.messages):
-    st.chat_message(msg["role"]).write(msg["content"])
+    if msg["role"] == "assistant":
+        st.chat_message(msg["role"], avatar=codee_avatar).markdown(msg["content"])
+    else:
+        st.chat_message(msg["role"]).markdown(msg["content"])
 
     if msg["role"] == "assistant" and n > 1:
         feedback_key = f"feedback_{int(n / 2)}"
@@ -140,6 +145,8 @@ if prompt := st.chat_input("Let's chat"):
     if not openai_api_key or openai_api_key != st.secrets["OPENAI_API_KEY_B"]:
         st.info("Please add/update your OpenAI API key to continue.")
         st.stop()
+    else:
+        client = OpenAI(api_key=openai_api_key)
         
     if not user_id:
         st.info("Please add your Participant # to continue.")
@@ -149,16 +156,13 @@ if prompt := st.chat_input("Let's chat"):
         message_placeholder = st.empty()
         generation = ""
         
-        for response in openai.ChatCompletion.create(
+        for part in client.chat.completions.create(
             model=model,
+            messages=messages, 
             temperature=temperature,
-            messages=[
-                {"role": m["role"], "content": m["content"]}
-                for m in st.session_state.messages
-            ],
-            stream=True,
+            stream=True
         ):
-            generation += response.choices[0].delta.get("content", "")
+            generation += part.choices[0].delta.content or ""
             message_placeholder.markdown(generation + "▌")
         message_placeholder.markdown(generation)
 
