@@ -156,7 +156,7 @@ if prompt := st.chat_input("Let's chat"):
         st.info("Please add your Participant # to continue.")
         st.stop()
 
-    st.session_state...append({"role": "user", "content": prompt})
+    st.session_state.messages.append({"role": "user", "content": prompt})
     st.chat_message("user").write(prompt)
     
     with st.chat_message("assistant", avatar=codee_avatar):
