@@ -56,11 +56,9 @@ model = "gpt-4"
 
 temperature = 0.3
 
-openai_api_key_b = st.secrets["OPENAI_API_KEY_B"]
-
 messages = st.session_state.messages
 
-# Feedback mechanism
+# Display messages and feedback mechanism
 for n, msg in enumerate(st.session_state.messages):
     if msg["role"] == "assistant":
         st.chat_message(msg["role"], avatar=codee_avatar).markdown(msg["content"])
@@ -147,9 +145,6 @@ for n, msg in enumerate(st.session_state.messages):
 
 # Chat input
 if prompt := st.chat_input("Let's chat"):
-    st.session_state.messages.append({"role": "user", "content": prompt})
-    st.chat_message("user").write(prompt)
-    
     # Verify input
     if not openai_api_key or openai_api_key != st.secrets["OPENAI_API_KEY_B"]:
         st.info("Please add/update your OpenAI API key to continue.")
@@ -160,6 +155,9 @@ if prompt := st.chat_input("Let's chat"):
     if not user_id:
         st.info("Please add your Participant # to continue.")
         st.stop()
+
+    st.session_state...append({"role": "user", "content": prompt})
+    st.chat_message("user").write(prompt)
     
     with st.chat_message("assistant", avatar=codee_avatar):
         message_placeholder = st.empty()
