@@ -159,8 +159,11 @@ if prompt := st.chat_input("Let's chat"):
         st.info("Please add your Participant # to continue.")
         st.stop()
 
+    # Add user message to chat history
     st.session_state.messages.append({"role": "user", "content": prompt})
-    st.chat_message("user").write(prompt)
+    
+    # Display user message in chat message container
+    st.chat_message("user").markdown(prompt)
     
     with st.chat_message("assistant", avatar=codee_avatar):
         message_placeholder = st.empty()
@@ -173,7 +176,10 @@ if prompt := st.chat_input("Let's chat"):
             stream=True
         ):
             generation += part.choices[0].delta.content or ""
+
+            # Add a blinking cursor to simulate typing
             message_placeholder.markdown(generation + "▌")
+
         message_placeholder.markdown(generation)
 
         logged_prompt = collector.log_prompt(
