@@ -40,7 +40,7 @@ count = 0  # Needed for unique Streamlit keys
 if "messages" not in st.session_state:
     # Start with first message from assistant
     st.session_state['messages'] = [{"role": "assistant", 
-                                  "content": f"Hi student! I'm Codee-B, an intelligent AI for Computer Science Principles. How can I help you today?"}]
+                                  "content": f"Hi student! I'm Codee-Blue, an intelligent AI for Computer Science Principles. How can I help you today?"}]
 
 # Trubrics info
 if "prompt_ids" not in st.session_state:
