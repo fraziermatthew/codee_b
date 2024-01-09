@@ -147,10 +147,10 @@ for n, msg in enumerate(st.session_state.messages):
 if prompt := st.chat_input("Let's chat"):
     # Verify input
     if not openai_api_key:
-        st.info("Please add your Codee-B API key to continue.")
+        st.info("Please add your Codee-Blue API key to continue.")
         st.stop()
     elif openai_api_key != st.secrets["OPENAI_API_KEY_B"]:
-        st.info("The Codee-B API key is incorrect. Please reenter the Codee-B API key.")
+        st.info("The Codee-Blue API key is incorrect. Please reenter the Codee-Blue API key.")
         st.stop()
     else:
         client = OpenAI(api_key=openai_api_key)
